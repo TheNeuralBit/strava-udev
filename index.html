@@ -1,0 +1,49 @@
+<html>
+  <body>
+    Client ID:<input type="text" id="client_id"><br/>
+    Secret:<input type="text" id="secret"><br/>
+    <input type="button" value="Get Access Token!" id="button" style="display: none;">
+    <h3 id="output"></h3>
+    <script type="text/javascript">
+var client_id = document.getElementById("client_id");
+var secret = document.getElementById("secret");
+var button = document.getElementById("button");
+var output = document.getElementById("output");
+
+var args = {};
+window.location.search.slice(1).split('&').forEach(function(d) {
+  var split = d.split('=');
+  args[split[0]] = split[1]
+});
+
+if (args.state) {
+  args.state = JSON.parse(decodeURIComponent(args.state));
+  client_id.value = args.state.client_id;
+  secret.value = args.state.secret;
+}
+
+if (args.code) {
+  output.textContent = "Access Token: ...";
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "https://www.strava.com/oauth/token")
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.responseType = "json";
+  xhr.send("client_id=" + args.state.client_id + "&" +
+           "client_secret=" + args.state.secret + "&" +
+           "code=" + args.code);
+  xhr.onload = function () {
+    console.log(xhr);
+    output.textContent = "Access Token: " + xhr.response.access_token;
+  };
+} else {
+  button.style = "";
+  button.addEventListener("click", function () {
+      var url = window.location.href.split("?")[0];
+      var state = {client_id: client_id.value, secret: secret.value}
+      window.location="https://www.strava.com/oauth/authorize?client_id=" + client_id.value + "&response_type=code&scope=write&state=" + JSON.stringify(state) + "&redirect_uri=" + url;
+  });
+}
+    </script>
+  </body>
+</html>
