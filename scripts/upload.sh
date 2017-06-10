@@ -2,7 +2,9 @@
 
 FNAME=$1
 
-source config.sh
+STRAVA_API_CLIENTID="your_client_id"
+STRAVA_API_SECRET="your_secret"
+
 dir="."
 token_file="${DIR}/.token"
 
