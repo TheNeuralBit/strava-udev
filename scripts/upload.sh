@@ -9,13 +9,13 @@ RESULT=`curl -s -X POST https://www.strava.com/api/v3/uploads \
     -H activity_type=run \
     -F file=@${FNAME} -F data_type=fit`
 
-ACTIVITY_ID=`echo $RESULT | jq .activity_id`
+ERROR=`echo $RESULT | jq .error`
 
-if [ "${ACTIVITY_ID}" == null ]; then
-    echo "Error uploading:"
-    echo "${RESULT}"
-    exit 1
-else
-    echo "Uploaded, ID=${ACTIVITY_ID}"
+if [ "${ERROR}" == null ]; then
+    echo "Uploaded"
     exit 0
+else
+    echo "Error uploading:"
+    echo "${RESULT}" | jq
+    exit 1
 fi
