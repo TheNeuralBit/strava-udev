@@ -1,6 +1,7 @@
-#! /bin/sh
+#! /bin/bash
 
-LOG=/var/strava-upload/upload.log
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+LOG=${DIR}/../upload.log
 
 if [ "${ACTION}" = add -a -e "${DEVNAME}" -a "${ID_FS_LABEL}" = GARMIN ]; then
     DIR=`mktemp -d`
