@@ -1,1 +1,1 @@
-ATTRS{idVendor}=="091e", ATTRS{idProduct}=="25ca", RUN+="/home/pi/strava-udev/udev.sh"
+ATTRS{idVendor}=="091e", ATTRS{idProduct}=="25ca", RUN+="/home/pi/strava-udev/scripts/udev.sh"

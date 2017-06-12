@@ -10,7 +10,7 @@ if [ "${ACTION}" = add -a -e "${DEVNAME}" -a "${ID_FS_LABEL}" = GARMIN ]; then
     for f in ${DIR}/GARMIN/ACTIVITY/*.FIT; do
         if [-f $f]; then
             echo "Uploading $f..." >> ${LOG}
-            /var/strava-upload/upload.sh $f >> ${LOG}
+            ${DIR}/upload.sh $f >> ${LOG}
             if [$?]; then
                 echo "Success! Erasing $f" >> ${LOG}
                 rm $f
